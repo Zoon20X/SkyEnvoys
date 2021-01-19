@@ -7,10 +7,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 public final class SkyEnvoys extends JavaPlugin {
 
     private static Plugin instance;
     private static SkyEnvoys skyEnvoys;
+    private static File EnvoyTypesFolder;
+    private static File SettingsFolder;
 
     @Override
     public void onEnable() {
@@ -19,6 +23,10 @@ public final class SkyEnvoys extends JavaPlugin {
         skyEnvoys = this;
         this.saveDefaultConfig();
         UtilsCollector.RunPlugin();
+        EnvoyTypesFolder = new File(getDataFolder(), "EnvoyTypes");
+        EnvoyTypesFolder.mkdirs();
+        SettingsFolder = new File(getDataFolder(), "Settings");
+        SettingsFolder.mkdirs();
 
         this.saveConfig();
         System.out.println(ChatColor.WHITE + "=============================");
@@ -37,7 +45,12 @@ public final class SkyEnvoys extends JavaPlugin {
     public static SkyEnvoys getSkyEnvoys(){
         return skyEnvoys;
     }
-
+    public static File getEnvoyTypesFolder(){
+        return EnvoyTypesFolder;
+    }
+    public static File getSettingsFolder(){
+        return SettingsFolder;
+    }
 
     @Override
     public void onDisable() {

@@ -1,0 +1,7 @@
+EnvoysCommand:
+  Player:
+    Enabled: true
+    Message:
+      - "&b===================="
+      - "&f/envoy time - &b&oShows the time until the next envoy"
+      - "&b===================="

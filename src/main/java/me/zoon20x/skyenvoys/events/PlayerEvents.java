@@ -1,6 +1,7 @@
 package me.zoon20x.skyenvoys.events;
 
 import me.zoon20x.skyenvoys.SkyEnvoys;
+import me.zoon20x.skyenvoys.events.CustomEvents.EnvoySummonEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,6 +19,12 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
+
     }
 
+
+    @EventHandler
+    public void onEnvoySpawnEvent(EnvoySummonEvent event){
+
+    }
 }

@@ -1,0 +1,28 @@
+Name: "Default"
+Effects:
+  Lightning: false #shoots lightning at the location of each chest that spawns
+  FallingBlock: #drops the item from the selected height instead of spawning the chest
+    Enabled: false
+    DropHeight: 10
+Message:
+  Summon: "&f{envoy_name} &bhas been summoned"
+  Finish: "&f{envoy_name} &bhas finished, next envoy in &f{envoy_time_start}"
+Time:
+  Summon: #this will trigger a envoy summon event in (default value 30 minutes) and when finished it will start the countdown again
+    Enabled: false
+    Units: Minutes
+    Amount: 30
+  Finish: #this will force stop the envoy event deleting all chests that are spawned, or locking them (see below to change option)
+    Enabled: false
+    Units: Minutes
+    Amount: 10
+
+FinishEvent:
+  #Chest option is what happens to the chests when the finish event is triggered
+  #LOCK - is the option that forces all chests even if they have stuff in them to lock and not let any users open them without a bypass permission
+  #DESTORY - is the option that will destroy all chest locations and remove any items inside the chest
+  ChestOption: LOCK
+  Message-Enabled: false #message located above
+SummonEvent:
+  Message-Enabled: false #message located above
+
