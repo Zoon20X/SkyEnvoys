@@ -1,5 +1,6 @@
 package me.zoon20x.skyenvoys.events;
 
+import me.zoon20x.skyenvoys.Containers.settings.EnvoyEvents;
 import me.zoon20x.skyenvoys.SkyEnvoys;
 import me.zoon20x.skyenvoys.events.CustomEvents.EnvoySummonEvent;
 import org.bukkit.Material;

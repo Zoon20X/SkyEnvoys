@@ -1,27 +1,36 @@
 package me.zoon20x.skyenvoys.events.CustomEvents;
 
-import com.sun.istack.internal.Nullable;
+import me.zoon20x.skyenvoys.Containers.EnvoyContainer;
 import me.zoon20x.skyenvoys.utils.EnvoySpawnReason;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.Nullable;
 
-public class EnvoySummonEvent extends Event {
+
+public class EnvoySummonEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
+    private final EnvoyContainer envoy;
     private final EnvoySpawnReason reason;
     private Player player;
     private String plugin;
+    private Boolean isCancelled;
 
 
-    public EnvoySummonEvent(EnvoySpawnReason reason){
+    public EnvoySummonEvent(EnvoyContainer envoy, EnvoySpawnReason reason){
+        this.envoy = envoy;
         this.reason = reason;
+
     }
-    public EnvoySummonEvent(EnvoySpawnReason reason, Player player){
+    public EnvoySummonEvent(EnvoyContainer envoy,EnvoySpawnReason reason, Player player){
+        this.envoy = envoy;
         this.reason = reason;
         this.player = player;
 
     }
-    public EnvoySummonEvent(EnvoySpawnReason reason, String plugin){
+    public EnvoySummonEvent(EnvoyContainer envoy,EnvoySpawnReason reason, String plugin){
+        this.envoy = envoy;
         this.reason = reason;
         this.plugin = plugin;
     }
@@ -53,5 +62,19 @@ public class EnvoySummonEvent extends Event {
     @Nullable
     public String getPlugin() {
         return plugin;
+    }
+
+    public EnvoyContainer getEnvoy() {
+        return envoy;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return isCancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancel) {
+        this.isCancelled = cancel;
     }
 }

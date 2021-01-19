@@ -1,7 +1,7 @@
 package me.zoon20x.skyenvoys.utils;
 
-import com.sun.istack.internal.Nullable;
 import me.zoon20x.skyenvoys.Containers.EnvoyContainer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 

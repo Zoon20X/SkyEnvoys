@@ -20,7 +20,7 @@ Time:
 FinishEvent:
   #Chest option is what happens to the chests when the finish event is triggered
   #LOCK - is the option that forces all chests even if they have stuff in them to lock and not let any users open them without a bypass permission
-  #DESTORY - is the option that will destroy all chest locations and remove any items inside the chest
+  #DESTROY - is the option that will destroy all chest locations and remove any items inside the chest
   ChestOption: LOCK
   Message-Enabled: false #message located above
 SummonEvent:
