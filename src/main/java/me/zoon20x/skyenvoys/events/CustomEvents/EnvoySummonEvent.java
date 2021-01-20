@@ -21,18 +21,22 @@ public class EnvoySummonEvent extends Event implements Cancellable {
     public EnvoySummonEvent(EnvoyContainer envoy, EnvoySpawnReason reason){
         this.envoy = envoy;
         this.reason = reason;
+        this.isCancelled = false;
 
     }
     public EnvoySummonEvent(EnvoyContainer envoy,EnvoySpawnReason reason, Player player){
         this.envoy = envoy;
         this.reason = reason;
         this.player = player;
+        this.isCancelled = false;
 
     }
     public EnvoySummonEvent(EnvoyContainer envoy,EnvoySpawnReason reason, String plugin){
         this.envoy = envoy;
         this.reason = reason;
         this.plugin = plugin;
+        this.isCancelled = false;
+
     }
 
     public static HandlerList getHandlerList() {

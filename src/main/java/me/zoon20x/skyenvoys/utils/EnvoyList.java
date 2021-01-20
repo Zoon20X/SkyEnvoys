@@ -9,7 +9,7 @@ public class EnvoyList {
 
     private static HashMap<String, EnvoyContainer> envoys = new HashMap<>();
 
-    protected static boolean addEnvoy(String id, EnvoyContainer container){
+    public static boolean addEnvoy(String id, EnvoyContainer container){
         if(envoys.containsKey(id)){
            return false;
         }

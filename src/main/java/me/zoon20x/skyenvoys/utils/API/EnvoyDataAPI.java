@@ -8,7 +8,7 @@ public class EnvoyDataAPI {
         this.EnvoyData = EnvoyData;
     }
 
-    public void runEnvoy(String PluginName){
+    public void summonEnvoy(String PluginName){
 
     }
 
