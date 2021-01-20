@@ -58,13 +58,12 @@ public class AsyncFileCache {
                     FileConfiguration itemsConfig = null;
                     FileConfiguration locationsConfig = null;
 
-
-                    if(settings != null && items !=null && locations !=null){
+                    if(settings.exists() && items.exists() && locations.exists()){
                         settingsConfig = getConfig(settings);
                         itemsConfig = getConfig(items);
                         locationsConfig = getConfig(locations);
                     }else{
-                        System.out.println(MessagesUtil.basicColor("&c" + x + "&4could not be loaded, please check you have all the files"));
+                        System.out.println(MessagesUtil.basicColor("&c" + x + " &4could not be loaded, please check you have all the files"));
                     }
                     if(settingsConfig !=null && itemsConfig !=null && locationsConfig !=null){
                         EnvoyEffects effects = new EnvoyEffects(settingsConfig.getBoolean("Effects.Lightning"), settingsConfig.getBoolean("FallingBlock.Enabled"), settingsConfig.getInt("FallingBlock.DropHeight"));
@@ -88,7 +87,7 @@ public class AsyncFileCache {
                         }else if(!summonTime && !finishTime){
                             time = new EnvoyTime();
                         }else{
-                            String units = "";
+                            String units;
                             Integer amount = 0;
                             if(summonTime){
                                 units = settingsConfig.getString("Time.Summon.Units");
@@ -103,7 +102,7 @@ public class AsyncFileCache {
                         EnvoyContainer container = new EnvoyContainer(x, new ArrayList<>(), effects, messages, time, events);
                         EnvoyList.addEnvoy(x, container);
                     }else{
-                        System.out.println(MessagesUtil.basicColor("&c" + x + "&4could not be loaded, please check you have all the files"));
+                        System.out.println(MessagesUtil.basicColor("&c" + x + " &4could not be loaded, please check you have all the files"));
                     }
                 }
             }

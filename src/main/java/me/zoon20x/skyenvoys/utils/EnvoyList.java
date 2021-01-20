@@ -3,6 +3,7 @@ package me.zoon20x.skyenvoys.utils;
 import me.zoon20x.skyenvoys.Containers.EnvoyContainer;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 public class EnvoyList {
@@ -29,6 +30,13 @@ public class EnvoyList {
             return null;
         }
         return envoys.get(id);
+    }
+
+    //Returns all envoys added to the envoy cache, this can return null
+
+    @Nullable
+    public static Collection<EnvoyContainer> getAllEnvoys(){
+        return envoys.values();
     }
 
 }
