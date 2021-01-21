@@ -4,6 +4,9 @@ import me.zoon20x.skyenvoys.Containers.EnvoyContainer;
 import me.zoon20x.skyenvoys.SkyEnvoys;
 import me.zoon20x.skyenvoys.commands.TabComplete.AdminTabComplete;
 import me.zoon20x.skyenvoys.utils.EnvoyList;
+import me.zoon20x.skyenvoys.utils.GuiHandlers.GUICreatorHandler;
+import me.zoon20x.skyenvoys.utils.GuiHandlers.GuiType;
+import me.zoon20x.skyenvoys.utils.MessagesUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,11 +25,53 @@ public class AdminEnvoys implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player){
             Player player = (Player) sender;
-            for(EnvoyContainer x : EnvoyList.getAllEnvoys()){
-                player.sendMessage(x.getName());
+            if(args.length == 1){
+                args1(args, player);
+            }
+            if(args.length == 2){
+                args2(args, player);
             }
             return true;
         }
         return false;
+    }
+
+
+
+    private void args1(String[] args, Player player){
+        switch (args[0]){
+            case "Creator":
+                player.sendMessage(MessagesUtil.basicColor(MessagesUtil.getLangData().getAdminCreatorNeedName()));
+                break;
+            case "Editor":
+                player.sendMessage(MessagesUtil.basicColor(MessagesUtil.getLangData().getAdminEditorNeedName()));
+                break;
+        }
+    }
+    private void args2(String[] args, Player player){
+        switch (args[0]){
+            case "Creator":
+                for(EnvoyContainer envoy : EnvoyList.getAllEnvoys()){
+                    if(args[1].equalsIgnoreCase(envoy.getName())){
+                        player.sendMessage(MessagesUtil.basicColor(MessagesUtil.getLangData().getAdminCreatorCreated()
+                                        .replace("{command_envoyName}", envoy.getName())));
+                        return;
+                    }
+                }
+                GUICreatorHandler create = new GUICreatorHandler(GuiType.Creator);
+                player.openInventory(create.getInventory());
+                break;
+            case "Editor":
+                for(EnvoyContainer envoy : EnvoyList.getAllEnvoys()){
+                    if(args[1].equalsIgnoreCase(envoy.getName())){
+                        GUICreatorHandler edit = new GUICreatorHandler(GuiType.Editor);
+                        player.openInventory(edit.getInventory());
+                        return;
+                    }
+                }
+                player.sendMessage(MessagesUtil.basicColor(MessagesUtil.getLangData().getAdminEditorNoExist()
+                        .replace("{command_envoyName}", args[1])));
+                break;
+        }
     }
 }

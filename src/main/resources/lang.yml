@@ -5,3 +5,18 @@ EnvoysCommand:
       - "&b===================="
       - "&f/envoy time - &b&oShows the time until the next envoy"
       - "&b===================="
+  Admin:
+    Creator:
+      NoName: #this states that the user has not put in a name
+        Enabled: true
+        Message: "&cPlease select a name for the envoy you are creating"
+      AlreadyCreated: #this states that the name used is already the name of a already created envoy
+        Enabled: true
+        Message: "&4{command_envoyName} &cis already a created envoy, to edit use /adminenvoys Editor {command_envoyName}"
+    Editor:
+      NoName: #this states that the user has not put in a name
+        Enabled: true
+        Message: "&cPlease select a name for the envoy you are editing"
+      NoExist: #this states that the name used is not a envoy and must be created first
+        Enabled: true
+        Message: "&4{command_envoyName} &cis not yet created be sure to create it before attempting to use the edit command"
