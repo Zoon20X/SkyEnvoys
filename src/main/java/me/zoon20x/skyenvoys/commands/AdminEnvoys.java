@@ -7,9 +7,16 @@ import me.zoon20x.skyenvoys.utils.EnvoyList;
 import me.zoon20x.skyenvoys.utils.GuiHandlers.GUICreatorHandler;
 import me.zoon20x.skyenvoys.utils.GuiHandlers.GuiType;
 import me.zoon20x.skyenvoys.utils.MessagesUtil;
+import net.minecraft.server.v1_16_R3.ChatComponentText;
+import net.minecraft.server.v1_16_R3.EntityArmorStand;
+import net.minecraft.server.v1_16_R3.PacketPlayOutSpawnEntityLiving;
+import net.minecraft.server.v1_16_R3.WorldServer;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class AdminEnvoys implements CommandExecutor {
@@ -64,7 +71,7 @@ public class AdminEnvoys implements CommandExecutor {
             case "Editor":
                 for(EnvoyContainer envoy : EnvoyList.getAllEnvoys()){
                     if(args[1].equalsIgnoreCase(envoy.getName())){
-                        GUICreatorHandler edit = new GUICreatorHandler(GuiType.Editor);
+                        GUICreatorHandler edit = new GUICreatorHandler(GuiType.Editor, envoy);
                         player.openInventory(edit.getInventory());
                         return;
                     }

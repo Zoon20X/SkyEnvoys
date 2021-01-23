@@ -83,6 +83,12 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>net.minecraft</groupId>
+            <artifactId>spigot-nms</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/all-nms.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

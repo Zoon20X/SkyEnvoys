@@ -10,6 +10,4 @@ public class LangContainer {
     private String adminEditorNeedName;
     private String adminEditorNoExist;
 
-
-
 }

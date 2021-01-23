@@ -38,4 +38,7 @@ public class PlayerEvents implements Listener {
         Bukkit.broadcastMessage(MessagesUtil.basicColor(event.getEnvoy().getMessages().getSummon().replace("{envoy_name}", event.getEnvoy().getName())));
         System.out.println(MessagesUtil.basicColor(event.getEnvoy().getEvents().getState().toString()));
     }
+
+
+
 }
