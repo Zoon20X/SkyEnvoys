@@ -18,6 +18,9 @@ public class EnvoyList {
         return true;
 
     }
+    public static void resetEnvoys(){
+        envoys.clear();
+    }
     public static boolean hasEnvoy(String id){
         return envoys.containsKey(id);
     }

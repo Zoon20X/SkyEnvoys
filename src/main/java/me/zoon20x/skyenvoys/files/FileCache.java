@@ -23,7 +23,6 @@ public class FileCache {
             config = YamlConfiguration.loadConfiguration(file);
             plugin.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "SkyEnvoys>> Loading Module File " + Name + ".yml");
         }
-
         if (!file.exists()) {
             plugin.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "SkyEnvoys>> Creating Module File " + Name + ".yml");
             plugin.saveResource(secLoc, false);

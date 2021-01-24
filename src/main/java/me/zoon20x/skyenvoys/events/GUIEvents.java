@@ -2,6 +2,8 @@ package me.zoon20x.skyenvoys.events;
 
 import me.zoon20x.skyenvoys.SkyEnvoys;
 import me.zoon20x.skyenvoys.utils.GuiHandlers.GUICreatorHandler;
+import me.zoon20x.skyenvoys.utils.GuiHandlers.GuiType;
+import me.zoon20x.skyenvoys.utils.GuiHandlers.SettingsHandler;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,11 +32,15 @@ public class GUIEvents implements Listener {
             GUICreatorHandler guiCreatorHandler = (GUICreatorHandler) event.getClickedInventory().getHolder();
             Inventory inventory = event.getInventory();
             ItemStack item = event.getCurrentItem();
+            System.out.println(event.getAction());
+            System.out.println(event.getClick());
             if (guiCreatorHandler.getLocationsItem().equals(item)) {
                 System.out.println("Locations");
                 return;
             }
             if(guiCreatorHandler.getSettingsItem().equals(item)){
+                SettingsHandler settingsHandler = new SettingsHandler(guiCreatorHandler.getEnvoy());
+                event.getWhoClicked().openInventory(settingsHandler.getInventory());
                 System.out.println("Settings");
                 return;
             }

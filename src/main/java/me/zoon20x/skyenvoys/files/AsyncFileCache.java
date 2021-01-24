@@ -9,8 +9,10 @@ import me.zoon20x.skyenvoys.utils.ChestStates;
 import me.zoon20x.skyenvoys.utils.EnvoyList;
 import me.zoon20x.skyenvoys.utils.MessagesUtil;
 import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -21,7 +23,7 @@ import java.util.UUID;
 public class AsyncFileCache {
 
     private static File getFile(String id){
-        return new File(SkyEnvoys.getInstance().getDataFolder(),   "/"+id);
+        return new File(SkyEnvoys.getInstance().getDataFolder(),   id + ".yml");
     }
     private static File getEnvoyTypesFile(String id){
         return new File(SkyEnvoys.getEnvoyTypesFolder(),   "/"+id);
@@ -32,7 +34,11 @@ public class AsyncFileCache {
 
 
     public static void startAsyncCreate() {
-        FileCache.createFile(getFile("lang"), getConfig(getFile("lang.yml")), "/lang.yml", "lang.yml", "lang");
+        FileCache.createFile(getFile("lang"),getConfig(getFile("lang")), "lang.yml", "lang.yml", "lang");
+        FileCache.createFile(getFile("/GUIS/SettingsGUI.yml"),
+                getConfig(getFile("/GUIS/SettingsGUI.yml")),
+                "/GUIS/SettingsGUI.yml",
+                "GUIS/SettingsGUI.yml", "SettingsGUI");
 
         startAsyncCache();
     }
@@ -43,12 +49,13 @@ public class AsyncFileCache {
         new BukkitRunnable(){
             @Override
             public void run() {
-                FileCache.addFileToCache("lang", getConfig(getFile("lang.yml")));
+                FileCache.addFileToCache("lang", getConfig(getFile("lang")));
+                FileCache.addFileToCache("settingsGUI", getConfig(getFile("/GUIS/SettingsGUI")));
                 LoadLangData();
 
-                LoadEnvoys();
             }
         }.runTaskAsynchronously(SkyEnvoys.getInstance());
+        LoadEnvoys();
     }
 
     public static void LoadLangData(){
@@ -62,63 +69,69 @@ public class AsyncFileCache {
 
 
     public static void LoadEnvoys(){
-        File dir = SkyEnvoys.getEnvoyTypesFolder();
-        for(String x : dir.list()){
-            System.out.println(x);
-            File settings = getEnvoyTypesFile(x + "/Settings.yml");
-            File items = getEnvoyTypesFile(x + "/Items.yml");
-            File locations = getEnvoyTypesFile(x + "/Locations.yml");
-            FileConfiguration settingsConfig = null;
-            FileConfiguration itemsConfig = null;
-            FileConfiguration locationsConfig = null;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                File dir = SkyEnvoys.getEnvoyTypesFolder();
+                for(String x : dir.list()){
+                    File settings = getEnvoyTypesFile(x + "/Settings.yml");
+                    File items = getEnvoyTypesFile(x + "/Items.yml");
+                    File locations = getEnvoyTypesFile(x + "/Locations.yml");
+                    FileConfiguration settingsConfig = null;
+                    FileConfiguration itemsConfig = null;
+                    FileConfiguration locationsConfig = null;
 
-            if(settings.exists() && items.exists() && locations.exists()){
-                settingsConfig = getConfig(settings);
-                itemsConfig = getConfig(items);
-                locationsConfig = getConfig(locations);
-            }else{
-                System.out.println(MessagesUtil.basicColor("&c" + x + " &4could not be loaded, please check you have all the files"));
-            }
-            if(settingsConfig !=null && itemsConfig !=null && locationsConfig !=null){
-                EnvoyEffects effects = new EnvoyEffects(settingsConfig.getBoolean("Effects.Lightning"), settingsConfig.getBoolean("FallingBlock.Enabled"), settingsConfig.getInt("FallingBlock.DropHeight"));
-                EnvoyMessages messages = new EnvoyMessages(settingsConfig.getString("Message.Summon"), settingsConfig.getString("Message.Finish"));
-                EnvoyEvents events = new EnvoyEvents(
-                        settingsConfig.getBoolean("SummonEvent.Message-Enabled"),
-                        settingsConfig.getBoolean("FinishEvent.Message-Enabled"),
-                        ChestStates.valueOf(settingsConfig.getString("FinishEvent.ChestOption")));
-                Boolean summonTime = settingsConfig.getBoolean("Time.Summon.Enabled");
-                Boolean finishTime = settingsConfig.getBoolean("Time.Finish.Enabled");
+                    if(settings.exists() && items.exists() && locations.exists()){
+                        settingsConfig = getConfig(settings);
+                        itemsConfig = getConfig(items);
+                        locationsConfig = getConfig(locations);
+                    }else{
+                        System.out.println(MessagesUtil.basicColor("&c" + x + " &4could not be loaded, please check you have all the files"));
+                    }
+                    if(settingsConfig !=null && itemsConfig !=null && locationsConfig !=null){
+                        EnvoyEffects effects = new EnvoyEffects(settingsConfig.getBoolean("Effects.Lightning"), settingsConfig.getBoolean("FallingBlock.Enabled"), settingsConfig.getInt("FallingBlock.DropHeight"));
+                        EnvoyMessages messages = new EnvoyMessages(settingsConfig.getString("Message.Summon"), settingsConfig.getString("Message.Finish"));
+                        EnvoyEvents events = new EnvoyEvents(
+                                settingsConfig.getBoolean("SummonEvent.Message-Enabled"),
+                                settingsConfig.getBoolean("FinishEvent.Message-Enabled"),
+                                ChestStates.valueOf(settingsConfig.getString("FinishEvent.ChestOption")));
+                        Boolean summonTime = settingsConfig.getBoolean("Time.Summon.Enabled");
+                        Boolean finishTime = settingsConfig.getBoolean("Time.Finish.Enabled");
 
-                EnvoyTime time = null;
-                if (summonTime && finishTime) {
-                    String summonUnits = settingsConfig.getString("Time.Summon.Units");
-                    String finishUnits = settingsConfig.getString("Time.Finish.Units");
+                        EnvoyTime time = null;
+                        if (summonTime && finishTime) {
+                            String summonUnits = settingsConfig.getString("Time.Summon.Units");
+                            String finishUnits = settingsConfig.getString("Time.Finish.Units");
 
-                    Integer summonAmount = settingsConfig.getInt("Time.Summon.Amount");
-                    Integer finishAmount = settingsConfig.getInt("Time.Finish.Amount");
-                    time = new EnvoyTime(true, true, summonUnits, finishUnits, summonAmount, finishAmount);
+                            Integer summonAmount = settingsConfig.getInt("Time.Summon.Amount");
+                            Integer finishAmount = settingsConfig.getInt("Time.Finish.Amount");
+                            time = new EnvoyTime(true, true, summonUnits, finishUnits, summonAmount, finishAmount);
 
-                }else if(!summonTime && !finishTime){
-                    time = new EnvoyTime();
-                }else{
-                    String units;
-                    Integer amount = 0;
-                    if(summonTime){
-                        units = settingsConfig.getString("Time.Summon.Units");
-                        amount = settingsConfig.getInt("Time.Summon.Amount");
-                        time = new EnvoyTime(true, false, units, amount);
-                    }else if(finishTime){
-                        units = settingsConfig.getString("Time.Finish.Units");
-                        amount = settingsConfig.getInt("Time.Finish.Amount");
-                        time = new EnvoyTime(false, true, units, amount);
+                        }else if(!summonTime && !finishTime){
+                            time = new EnvoyTime();
+                        }else{
+                            String units;
+                            Integer amount = 0;
+                            if(summonTime){
+                                units = settingsConfig.getString("Time.Summon.Units");
+                                amount = settingsConfig.getInt("Time.Summon.Amount");
+                                time = new EnvoyTime(true, false, units, amount);
+                            }else if(finishTime){
+                                units = settingsConfig.getString("Time.Finish.Units");
+                                amount = settingsConfig.getInt("Time.Finish.Amount");
+                                time = new EnvoyTime(false, true, units, amount);
+                            }
+                        }
+                        ItemStack item = new ItemStack(Material.valueOf(settingsConfig.getString("EnvoyBlock.Type")), 1, (short) settingsConfig.getInt("EnvoyBlock.Data"));
+                        EnvoyContainer container = new EnvoyContainer(x,item, new ArrayList<>(), effects, messages, time, events);
+                        EnvoyList.addEnvoy(x, container);
+                    }else{
+                        System.out.println(MessagesUtil.basicColor("&c" + x + " &4could not be loaded, please check you have all the files"));
                     }
                 }
-                EnvoyContainer container = new EnvoyContainer(x, new ArrayList<>(), effects, messages, time, events);
-                EnvoyList.addEnvoy(x, container);
-            }else{
-                System.out.println(MessagesUtil.basicColor("&c" + x + " &4could not be loaded, please check you have all the files"));
             }
-        }
+        }.runTaskAsynchronously(SkyEnvoys.getSkyEnvoys());
+
     }
 
 

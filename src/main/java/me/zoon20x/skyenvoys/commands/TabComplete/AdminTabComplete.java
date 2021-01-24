@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class AdminTabComplete implements TabCompleter {
-    private static final String[] args1 = {"Creator","Editor"};
+    private static final String[] args1 = {"create","edit"};
     private static final ArrayList<String> envoysList = new ArrayList<>();
     //create a static array of values
 

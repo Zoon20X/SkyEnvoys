@@ -1,4 +1,7 @@
 Name: "Default"
+EnvoyBlock:
+  Type: CHEST
+  Data: 0
 Effects:
   Lightning: false #shoots lightning at the location of each chest that spawns
   FallingBlock: #drops the item from the selected height instead of spawning the chest

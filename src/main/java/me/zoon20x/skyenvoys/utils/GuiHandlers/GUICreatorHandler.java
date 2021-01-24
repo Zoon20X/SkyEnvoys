@@ -27,29 +27,40 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 public class GUICreatorHandler implements InventoryHolder {
-    private GuiType type;
     private EnvoyContainer container;
 
-    public GUICreatorHandler(GuiType type, EnvoyContainer container){
-        this.type = type;
+    public GUICreatorHandler(EnvoyContainer container){
         this.container = container;
-    }
-    public GUICreatorHandler(GuiType type){
-        this.type = type;
-
     }
 
     @NotNull
     @Override
     public Inventory getInventory() {
-        Inventory inventory = Bukkit.createInventory(this, InventoryType.HOPPER, "Envoy " + type);
-        inventory.setItem(2, getSettingsItem());
-        inventory.setItem(1, getLocationsItem());
-        inventory.setItem(3, getItems());
+        Inventory inventory = Bukkit.createInventory(this, InventoryType.HOPPER, "Envoy - " + container.getName());
+        loadEditor(inventory);
+        SettingsHandler settingsHandler = new SettingsHandler(container);
+        settingsHandler.loadCachedItems("Lightning", true);
+        settingsHandler.loadCachedItems("FallingBlock", false);
+        settingsHandler.loadCachedItems("Messages", false);
+        settingsHandler.loadCachedItems("EnvoyBlock", false);
+        settingsHandler.loadCachedItems("SaveEnvoy", false);
+        settingsHandler.loadCachedItems("TimeSettings", false);
+        settingsHandler.loadCachedItems("EnvoyEvents", false);
+        settingsHandler.loadCachedItems("Glass", false);
 
         return inventory;
     }
 
+    @NotNull
+    public EnvoyContainer getEnvoy(){
+        return this.container;
+    }
+
+    private void loadEditor(Inventory inv){
+        inv.setItem(2, getSettingsItem());
+        inv.setItem(1, getLocationsItem());
+        inv.setItem(3, getItems());
+    }
 
     public ItemStack getSettingsItem(){
         ItemStack itemStack = new ItemStack(Material.COMMAND_BLOCK);

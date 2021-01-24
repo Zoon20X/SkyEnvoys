@@ -7,6 +7,7 @@ import me.zoon20x.skyenvoys.utils.EnvoyList;
 import me.zoon20x.skyenvoys.utils.GuiHandlers.GUICreatorHandler;
 import me.zoon20x.skyenvoys.utils.GuiHandlers.GuiType;
 import me.zoon20x.skyenvoys.utils.MessagesUtil;
+import me.zoon20x.skyenvoys.utils.UtilsCollector;
 import net.minecraft.server.v1_16_R3.ChatComponentText;
 import net.minecraft.server.v1_16_R3.EntityArmorStand;
 import net.minecraft.server.v1_16_R3.PacketPlayOutSpawnEntityLiving;
@@ -19,9 +20,12 @@ import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
+
 public class AdminEnvoys implements CommandExecutor {
     private SkyEnvoys envoys;
-    public AdminEnvoys(SkyEnvoys skyEnvoys){
+
+    public AdminEnvoys(SkyEnvoys skyEnvoys) {
         skyEnvoys.getCommand("adminEnvoys").setTabCompleter(new AdminTabComplete());
         skyEnvoys.getCommand("adminEnvoys").setExecutor(this);
         envoys = skyEnvoys;
@@ -30,12 +34,12 @@ public class AdminEnvoys implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(sender instanceof Player){
+        if (sender instanceof Player) {
             Player player = (Player) sender;
-            if(args.length == 1){
+            if (args.length == 1) {
                 args1(args, player);
             }
-            if(args.length == 2){
+            if (args.length == 2) {
                 args2(args, player);
             }
             return true;
@@ -44,9 +48,8 @@ public class AdminEnvoys implements CommandExecutor {
     }
 
 
-
-    private void args1(String[] args, Player player){
-        switch (args[0]){
+    private void args1(String[] args, Player player) {
+        switch (args[0]) {
             case "Creator":
                 player.sendMessage(MessagesUtil.basicColor(MessagesUtil.getLangData().getAdminCreatorNeedName()));
                 break;
@@ -55,23 +58,27 @@ public class AdminEnvoys implements CommandExecutor {
                 break;
         }
     }
-    private void args2(String[] args, Player player){
-        switch (args[0]){
-            case "Creator":
-                for(EnvoyContainer envoy : EnvoyList.getAllEnvoys()){
-                    if(args[1].equalsIgnoreCase(envoy.getName())){
+
+    private void args2(String[] args, Player player) {
+        switch (GuiType.valueOf(args[0].toUpperCase())) {
+            case CREATE:
+                for (EnvoyContainer envoy : EnvoyList.getAllEnvoys()) {
+                    if (args[1].equalsIgnoreCase(envoy.getName())) {
                         player.sendMessage(MessagesUtil.basicColor(MessagesUtil.getLangData().getAdminCreatorCreated()
-                                        .replace("{command_envoyName}", envoy.getName())));
+                                .replace("{command_envoyName}", envoy.getName())));
                         return;
                     }
                 }
-                GUICreatorHandler create = new GUICreatorHandler(GuiType.Creator);
-                player.openInventory(create.getInventory());
+
+                if (UtilsCollector.runEnvoyCreation(args[1])) {
+
+                }
+
                 break;
-            case "Editor":
-                for(EnvoyContainer envoy : EnvoyList.getAllEnvoys()){
-                    if(args[1].equalsIgnoreCase(envoy.getName())){
-                        GUICreatorHandler edit = new GUICreatorHandler(GuiType.Editor, envoy);
+            case EDIT:
+                for (EnvoyContainer envoy : EnvoyList.getAllEnvoys()) {
+                    if (args[1].equalsIgnoreCase(envoy.getName())) {
+                        GUICreatorHandler edit = new GUICreatorHandler(envoy);
                         player.openInventory(edit.getInventory());
                         return;
                     }

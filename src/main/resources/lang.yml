@@ -12,7 +12,7 @@ EnvoysCommand:
         Message: "&cPlease select a name for the envoy you are creating"
       AlreadyCreated: #this states that the name used is already the name of a already created envoy
         Enabled: true
-        Message: "&4{command_envoyName} &cis already a created envoy, to edit use /adminenvoys Editor {command_envoyName}"
+        Message: "&4{command_envoyName} &cis already a created envoy, to edit use /adminenvoys edit {command_envoyName}"
     Editor:
       NoName: #this states that the user has not put in a name
         Enabled: true

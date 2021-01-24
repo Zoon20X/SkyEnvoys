@@ -1,0 +1,33 @@
+Items:
+  Lightning:
+    Type: GLOWSTONE
+    Data: 0
+    Amount: 1
+  FallingBlock:
+    Type: GRASS_BLOCK
+    Data: 0
+    Amount: 1
+  Messages:
+    Type: NAME_TAG
+    Data: 0
+    Amount: 1
+  EnvoyBlock:
+    Type: {EnvoyItems_Block} #gets the item from what envoy is loaded for settings
+    Amount: 0
+  SaveEnvoy:
+    Type: EMERALD_BLOCK
+    Data: 0
+    Amount: 1
+  TimeSettings:
+    Type: CLOCK
+    Data: 0
+    Amount: 1
+  EnvoyEvents:
+    Type: FIREWORK_ROCKET
+    Data: 0
+    Amount: 1
+  Glass:
+    Type: BLACK_STAINED_GLASS_PANE
+    Data: 0
+    Amount: 1
+    EmptySpaces: true
